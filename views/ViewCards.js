@@ -10,11 +10,11 @@ export default class ViewCards extends Component {
         }
     }
 
-    componentDidMount(){
-        this.setState({
-            cards:this.props.cards
-        })
-    }
+    // componentDidMount(){
+    //     this.setState({
+    //         cards:this.props.cards
+    //     })
+    // }
 
     shuffle=async()=>{
         const cards = [...this.props.cards]
