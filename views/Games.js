@@ -24,9 +24,8 @@ export default class Game extends Component {
     }
 
     getCards = async () => {
-        axios.get(`${url}/api/cards`).then(({ data: cards }) => {
-            this.setState({ cards })
-        })
+        const {data:cards} = await axios.get(`${url}/api/cards`)
+        this.setState({ cards })
     }
 
     render() {
