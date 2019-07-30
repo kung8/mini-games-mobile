@@ -1,67 +1,70 @@
-import React,{Component} from 'react'
-import { StyleSheet, Text, View ,TouchableOpacity} from 'react-native';
+import React, { Component } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Blackjack from './Blackjack'
 import War from './War'
 import GoFish from './GoFish'
 import OldMaid from './OldMaid'
 import Solitaire from './Solitaire'
 import TicTacToe from './TicTacToe'
-
+import ViewCards from './ViewCards'
+import { url } from '../url'
 import axios from 'axios'
 
 export default class Game extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.state={
-            selectedGame:'',
-            cards:[]
+        this.state = {
+            selectedGame: '',
+            cards: []
         }
-        this.getCards = this.getCards.bind(this)
-    }
-    
-    componentDidMount(){
-        // this.getCards()
-    }
-    
-    async getCards(){
-        // let cards = await axios.get('/api/cards')
-        // console.log(cards)
-        // this.setState({
-        //     cards
-        // })
     }
 
-    render(){
-        console.log(this.state.cards)
-        const selectedGame = this.props.navigation.getParam('selectedGame','')
-        if(selectedGame === 'Blackjack'){
-            return(
-                <Blackjack/>
-            )
-        } else if(selectedGame === 'War'){
-            return(
-                <War/>
-            )
-        } else if(selectedGame === 'GoFish'){
-            return(
-                <GoFish/>
-            )
-        } else if (selectedGame === 'OldMaid'){
+    componentDidMount() {
+        this.getCards()
+    }
+
+    getCards = async () => {
+        axios.get(`${url}/api/cards`).then(({ data: cards }) => {
+            this.setState({ cards })
+        })
+    }
+
+    render() {
+        const selectedGame = this.props.navigation.getParam('selectedGame', '')
+        if (selectedGame === 'Blackjack') {
             return (
-                <OldMaid/>
+                <Blackjack cards={this.state.cards} />
             )
-        } else if(selectedGame === 'Solitaire'){
-            return(
-                <Solitaire/>
+        } else if (selectedGame === 'War') {
+            return (
+                <War cards={this.state.cards} />
             )
-        }else if(selectedGame === 'TicTacToe'){
-            return(
-                <TicTacToe/>
+        } else if (selectedGame === 'GoFish') {
+            return (
+                <GoFish cards={this.state.cards} />
             )
-        } else {
-            return(
+        } else if (selectedGame === 'OldMaid') {
+            return (
+                <OldMaid cards={this.state.cards} />
+            )
+        } else if (selectedGame === 'Solitaire') {
+            return (
+                <Solitaire cards={this.state.cards} />
+            )
+        } else if (selectedGame === 'TicTacToe') {
+            return (
+                <TicTacToe cards={this.state.cards} />
+            )
+        } else if (selectedGame === 'View') {
+            return (
+                <ViewCards cards={this.state.cards} />
+            )
+        }
+
+        else {
+            return (
                 <View style={styles.container}>
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('DASH')}><Text>Pick A Game</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('DASH')}><Text>Pick A Game</Text></TouchableOpacity>
                 </View>
             )
         }
@@ -69,10 +72,10 @@ export default class Game extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });

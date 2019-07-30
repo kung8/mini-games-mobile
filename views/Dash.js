@@ -13,7 +13,7 @@ export default class Dash extends Component {
         await this.setState({
             selectedGame: game
         })
-        this.props.navigation.navigate('GAME',{selectedGame:this.state.selectedGame})
+        this.props.navigation.navigate('GAME', { selectedGame: this.state.selectedGame })
     }
 
     render() {
@@ -25,6 +25,7 @@ export default class Dash extends Component {
                 <TouchableOpacity onPress={() => this.changeView('OldMaid')}><Text>Old Maid</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => this.changeView('Solitaire')}><Text>Solitaire</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => this.changeView('TicTacToe')}><Text>Tic Tac Toe</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.changeView('View')}><Text>Display Cards</Text></TouchableOpacity>
             </View>
         )
     }
