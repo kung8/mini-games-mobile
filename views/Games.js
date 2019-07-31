@@ -15,7 +15,7 @@ export default class Game extends Component {
         super()
         this.state = {
             selectedGame: '',
-            cards: []
+            cards: [], isLoaded: false
         }
     }
 
@@ -24,48 +24,52 @@ export default class Game extends Component {
     }
 
     getCards = async () => {
-        const {data:cards} = await axios.get(`${url}/api/cards`)
-        this.setState({ cards })
+        const { data: cards } = await axios.get(`${url}/api/cards`)
+        this.setState({ cards, isLoaded: true })
     }
 
     render() {
         const selectedGame = this.props.navigation.getParam('selectedGame', '')
-        if (selectedGame === 'Blackjack') {
-            return (
-                <Blackjack cards={this.state.cards} />
-            )
-        } else if (selectedGame === 'War') {
-            return (
-                <War cards={this.state.cards} />
-            )
-        } else if (selectedGame === 'GoFish') {
-            return (
-                <GoFish cards={this.state.cards} />
-            )
-        } else if (selectedGame === 'OldMaid') {
-            return (
-                <OldMaid cards={this.state.cards} />
-            )
-        } else if (selectedGame === 'Solitaire') {
-            return (
-                <Solitaire cards={this.state.cards} />
-            )
-        } else if (selectedGame === 'TicTacToe') {
-            return (
-                <TicTacToe cards={this.state.cards} />
-            )
-        } else if (selectedGame === 'View') {
-            return (
-                <ViewCards cards={this.state.cards} />
-            )
-        }
+        if (this.state.isLoaded) {
+            if (selectedGame === 'Blackjack') {
+                return (
+                    <Blackjack cards={this.state.cards} />
+                )
+            } else if (selectedGame === 'War') {
+                return (
+                    <War cards={this.state.cards} />
+                )
+            } else if (selectedGame === 'GoFish') {
+                return (
+                    <GoFish cards={this.state.cards} />
+                )
+            } else if (selectedGame === 'OldMaid') {
+                return (
+                    <OldMaid cards={this.state.cards} />
+                )
+            } else if (selectedGame === 'Solitaire') {
+                return (
+                    <Solitaire cards={this.state.cards} />
+                )
+            } else if (selectedGame === 'TicTacToe') {
+                return (
+                    <TicTacToe />
+                )
+            } else if (selectedGame === 'View') {
+                return (
+                    <ViewCards cards={this.state.cards} />
+                )
+            }
 
-        else {
-            return (
-                <View style={styles.container}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('DASH')}><Text>Pick A Game</Text></TouchableOpacity>
-                </View>
-            )
+            else {
+                return (
+                    <View style={styles.container}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('DASH')}><Text>Pick A Game</Text></TouchableOpacity>
+                    </View>
+                )
+            }
+        } else {
+            return null
         }
     }
 }

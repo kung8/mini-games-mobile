@@ -10,11 +10,11 @@ export default class ViewCards extends Component {
         }
     }
 
-    // componentDidMount(){
-    //     this.setState({
-    //         cards:this.props.cards
-    //     })
-    // }
+    componentDidMount(){
+        this.setState({
+            cards:this.props.cards
+        })
+    }
 
     shuffle=async()=>{
         const cards = [...this.props.cards]
@@ -29,6 +29,7 @@ export default class ViewCards extends Component {
 
     render() {
         const mappedCards = this.state.cards.map(card => {
+            card.show = true
             return (
                 <Cards key={card.card_id} card={card} />
             )
