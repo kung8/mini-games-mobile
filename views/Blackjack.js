@@ -13,7 +13,7 @@ export default class Blackjack extends Component {
       player4: [],
       whoseTurnIsIt: [1, 2, 3, 4],
       handShown: false,
-      values:[],
+      values: [],
     }
   }
 
@@ -77,14 +77,10 @@ export default class Blackjack extends Component {
   }
 
   hold = async () => {
-    await console.log('hit hold')
     let turns = [...this.state.whoseTurnIsIt]
     turns = turns.filter(turn => turn !== 1)
-    await this.setState({ whoseTurnIsIt: turns})
-    console.log(this.state.whoseTurnIsIt)
-    // for(let i=0; this.state.whoseTurnIsIt.length !== 0; i++){
-      await this.sum()
-    // }
+    await this.setState({ whoseTurnIsIt: turns })
+    await this.sum()
   }
 
   sum = async () => {
@@ -96,7 +92,7 @@ export default class Blackjack extends Component {
     let hand4 = [...this.state.player4]
     let cards = [...this.state.cards]
     let turns = [...this.state.whoseTurnIsIt]
-    let value1 = [...this.state.player1].sort((a,b)=> b.value - a.value).reduce((total,card)=>total+card.value,0)
+    let value1 = [...this.state.player1].sort((a, b) => b.value - a.value).reduce((total, card) => total + card.value, 0)
     if (value2 < 12) {
       let topCard = await cards.splice(0, 1)
       hand2.push(...topCard)
@@ -105,7 +101,7 @@ export default class Blackjack extends Component {
     }
 
     if (value3 < 12) {
-      let topCard = await cards.splice(0, 1) 
+      let topCard = await cards.splice(0, 1)
       hand3.push(...topCard)
     } else {
       turns = await turns.filter(turn => { return turn != 3 })
@@ -124,49 +120,63 @@ export default class Blackjack extends Component {
 
     await this.setState({
       cards, player2: hand2, player3: hand3, player4: hand4, whoseTurnIsIt: turns,
-      values:[value1,value2,value3,value4]
+      values: [value1, value2, value3, value4]
     })
     this.declareWinner()
   }
 
-  declareWinner = async() => {
-    if(this.state.whoseTurnIsIt.length === 0){
-
-      let twentyOne = this.state.values.filter((score,i)=>score <= 21)
+  declareWinner = async () => {
+    if (this.state.whoseTurnIsIt.length === 0) {
+      let twentyOne = this.state.values.filter((score, i) => score <= 21)
       let highest = Math.max(...twentyOne)
       let index = this.state.values.findIndex(score => score === highest)
-  
       let hand2 = [...this.state.player2]
+      let hand3 = [...this.state.player3]
+      let hand4 = [...this.state.player4]
+
       let mappedHand2 = hand2.map(card => {
         card.show = true
         return card
       })
-  
-      let hand3 = [...this.state.player3]
+
       let mappedHand3 = hand3.map(card => {
         card.show = true
         return card
       })
-  
-      let hand4 = [...this.state.player4]
+
       let mappedHand4 = hand4.map(card => {
         card.show = true
         return card
       })
-  
+
       await this.setState({
         player2: mappedHand2,
         player3: mappedHand3,
         player4: mappedHand4,
-        whoseTurnIsIt:[1,2,3,4],
-        winnerDeclared:true
+        whoseTurnIsIt: [1, 2, 3, 4],
+        winnerDeclared: true
       })
-  
-      alert(`Player ${index+1} wins!`)
+
+      let alertCongratsArray = [
+        `Congratulations on winning with ${highest}!`,
+        `Must be cool being you with ${highest}!`,
+        `Amazing game! Great score of ${highest}!`,
+        `Here's to all the luck with ${highest}!`,
+        `Your new lucky number is ${highest}`
+      ]
+
+      let selectedMsg = Math.floor(Math.random() * 5)
+
+      let player = index+1
+      if(player === 1){
+        alert(alertCongratsArray[selectedMsg])
+      } else {
+        alert(`Sorry, Player ${player} wins with ${highest}!`)
+      }
     }
   }
 
-  reset=async()=>{
+  reset = async () => {
     await this.setState({
       cards: this.props.cards,
       player1: [],
@@ -175,8 +185,8 @@ export default class Blackjack extends Component {
       player4: [],
       whoseTurnIsIt: [1, 2, 3, 4],
       handShown: false,
-      values:[],
-      winnerDeclared:false
+      values: [],
+      winnerDeclared: false
     })
     this.handleStart()
   }
@@ -186,63 +196,52 @@ export default class Blackjack extends Component {
       if (i !== 0 || card.show) {
         card.show = true
         return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
+          <Cards key={card.card_id} card={card} />
         )
       } else if (i === 0) {
         card.show = false
         return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
+          <Cards key={card.card_id} card={card} />
         )
       }
     })
+
     const mappedPlayer2 = this.state.player2.map((card, i) => {
-      if (i !== 0) {
+      if (i !== 0 || card.show) {
         card.show = true
         return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
-        )
-      } else if(card.show && i===0) {
-        return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
+          <Cards key={card.card_id} card={card} />
         )
       } else {
         card.show = false
         return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
+          <Cards key={card.card_id} card={card} />
         )
       }
     })
     const mappedPlayer3 = this.state.player3.map((card, i) => {
-      if (i !== 0) {
+      if (i !== 0 || card.show) {
         card.show = true
         return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
-        )
-      } else if(card.show && i===0) {
-        return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
+          <Cards key={card.card_id} card={card} />
         )
       } else {
         card.show = false
         return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
+          <Cards key={card.card_id} card={card} />
         )
       }
     })
     const mappedPlayer4 = this.state.player4.map((card, i) => {
-      if (i !== 0) {
+      if (i !== 0 || card.show) {
         card.show = true
         return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
-        )
-      } else if(card.show && i===0) {
-        return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
+          <Cards key={card.card_id} card={card} />
         )
       } else {
         card.show = false
         return (
-          <Cards key={`${card.name}:${card.suit}`} card={card} />
+          <Cards key={card.card_id} card={card} />
         )
       }
     })
@@ -251,7 +250,7 @@ export default class Blackjack extends Component {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
           <Text>Black Jack</Text>
-          <Button onPress={this.reset} title='Reset'/>
+          <Button onPress={this.reset} title='Reset' />
           <Text>Player 1</Text>
           {mappedPlayer1}
           <Button onPress={this.showHand} disabled={this.state.handShown} title='View Hand' />
