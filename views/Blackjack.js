@@ -97,25 +97,25 @@ export default class Blackjack extends Component {
       let topCard = await cards.splice(0, 1)
       hand2.push(...topCard)
     } else {
-      turns = await turns.filter(turn => { return turn != 2 })
+      turns = await turns.filter(turn => { return turn !== 2 })
     }
 
     if (value3 < 12) {
       let topCard = await cards.splice(0, 1)
       hand3.push(...topCard)
     } else {
-      turns = await turns.filter(turn => { return turn != 3 })
+      turns = await turns.filter(turn => { return turn !== 3 })
     }
 
     if (value4 < 12) {
       let topCard = await cards.splice(0, 1)
       hand4.push(...topCard)
     } else {
-      turns = await turns.filter(turn => { return turn != 4 })
+      turns = await turns.filter(turn => { return turn !== 4 })
     }
 
     if (this.state.player1.length === 5) {
-      turns = await turns.filter(turn => turn != 1)
+      turns = await turns.filter(turn => turn !== 1)
     }
 
     await this.setState({
@@ -177,8 +177,8 @@ export default class Blackjack extends Component {
   }
 
   reset = async () => {
-    await this.setState({
-      cards: this.props.cards,
+    this.setState({
+      cards: [...this.props.cards],
       player1: [],
       player2: [],
       player3: [],
@@ -193,12 +193,16 @@ export default class Blackjack extends Component {
 
   render() {
     const mappedPlayer1 = this.state.player1.map((card, i) => {
-      if (i !== 0 || card.show) {
+      if (i !== 0) {
         card.show = true
         return (
           <Cards key={card.card_id} card={card} />
         )
-      } else if (i === 0) {
+      } else if(card.show){
+        return (
+          <Cards key={card.card_id} card={card} />
+        )
+      } else if(i===0) {
         card.show = false
         return (
           <Cards key={card.card_id} card={card} />
@@ -207,12 +211,16 @@ export default class Blackjack extends Component {
     })
 
     const mappedPlayer2 = this.state.player2.map((card, i) => {
-      if (i !== 0 || card.show) {
+      if (i !== 0) {
         card.show = true
         return (
           <Cards key={card.card_id} card={card} />
         )
-      } else {
+      } else if(card.show){
+        return (
+          <Cards key={card.card_id} card={card} />
+        )
+      } else if(i===0) {
         card.show = false
         return (
           <Cards key={card.card_id} card={card} />
@@ -220,12 +228,16 @@ export default class Blackjack extends Component {
       }
     })
     const mappedPlayer3 = this.state.player3.map((card, i) => {
-      if (i !== 0 || card.show) {
+      if (i !== 0) {
         card.show = true
         return (
           <Cards key={card.card_id} card={card} />
         )
-      } else {
+      } else if(card.show){
+        return (
+          <Cards key={card.card_id} card={card} />
+        )
+      } else if(i===0) {
         card.show = false
         return (
           <Cards key={card.card_id} card={card} />
@@ -233,12 +245,16 @@ export default class Blackjack extends Component {
       }
     })
     const mappedPlayer4 = this.state.player4.map((card, i) => {
-      if (i !== 0 || card.show) {
+      if (i !== 0) {
         card.show = true
         return (
           <Cards key={card.card_id} card={card} />
         )
-      } else {
+      } else if(card.show){
+        return (
+          <Cards key={card.card_id} card={card} />
+        )
+      } else if(i===0) {
         card.show = false
         return (
           <Cards key={card.card_id} card={card} />

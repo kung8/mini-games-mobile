@@ -20,10 +20,10 @@ export default class Dash extends Component {
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => this.changeView('Blackjack')}><Text>Black Jack</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.changeView('GoFish')}><Text>Go Fish!</Text></TouchableOpacity>
+                {/* <TouchableOpacity onPress={() => this.changeView('GoFish')}><Text>Go Fish!</Text></TouchableOpacity> */}
                 <TouchableOpacity onPress={() => this.changeView('War')}><Text>War!</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.changeView('OldMaid')}><Text>Old Maid</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.changeView('Solitaire')}><Text>Solitaire</Text></TouchableOpacity>
+                {/* <TouchableOpacity onPress={() => this.changeView('OldMaid')}><Text>Old Maid</Text></TouchableOpacity> */}
+                {/* <TouchableOpacity onPress={() => this.changeView('Solitaire')}><Text>Solitaire</Text></TouchableOpacity> */}
                 <TouchableOpacity onPress={() => this.changeView('TicTacToe')}><Text>Tic Tac Toe</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => this.changeView('View')}><Text>Display Cards</Text></TouchableOpacity>
             </View>
