@@ -287,10 +287,7 @@ export default class Blackjack extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: 'silver',
-    // alignItems: 'center',
-    // justifyContent: 'center',
     marginVertical: 40,
     marginBottom: 0,
     height: '100%'
