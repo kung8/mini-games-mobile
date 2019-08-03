@@ -7,7 +7,7 @@ import Game from './views/Games'
 const nav = createBottomTabNavigator({
   DASH: Dash,
   GAME:Game,
-  PROFILE:Profile 
+  ABOUT:Profile 
 })
 
 const App = createAppContainer(nav)

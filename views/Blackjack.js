@@ -198,7 +198,7 @@ export default class Blackjack extends Component {
         return (
           <Cards key={card.card_id} card={card} />
         )
-      } else if(card.show){
+      } else if(card.show && i===0){
         return (
           <Cards key={card.card_id} card={card} />
         )
