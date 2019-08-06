@@ -44,6 +44,10 @@ export default class Blackjack extends Component {
       if (num <= 4) {
         let topCard = cards.splice(0, 2)
         let hand = [...topCard]
+        hand = hand.map(card => {
+          card.show = false
+          return card
+        })
         this.setState({
           ['player' + num]: [...hand],
           cards
